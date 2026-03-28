@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const TodoModel = require("./models/TodoModel");
+const {json} = require("express");
 app.use(cors({
     origin: "http://localhost:5173",
     credentials: true
@@ -54,7 +55,7 @@ app.get("/get-a-task/:id", async (req, res) => {
 app.get("/get-all-tasks", async (req, res) => {
     try {
         const todos = await TodoModel.find();
-        //throw new Error("Failed to fetch todos");
+
         return res.json(todos);
     } catch (error) {
         return res.status(500).json({error: error.message});
@@ -64,9 +65,9 @@ app.get("/get-all-tasks", async (req, res) => {
 app.put("/put-task/:id", async (req, res) => {
     try {
         const {id} = req.params;
-        const updatedTask = await TodoModel.findByIdAndUpdate(id,
-            {...req.body}
-            , {returnDocument: "after"});
+
+        const updatedTask = await TodoModel.findByIdAndUpdate(req.body._id, req.body, {returnDocument: "after"});
+
         return res.json(updatedTask);
     } catch (error) {
         return res.status(500).json({error: error.message});
