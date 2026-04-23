@@ -4,17 +4,19 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const TodoModel = require("./models/TodoModel");
 const {json} = require("express");
+require("dotenv").config();
+const port = process.env.PORT ?? 3000
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONT_END_URL,
     credentials: true
-
 
 }))
 app.use(express.json());
 
 const connectToDb = async () => {
     try {
-        await mongoose.connect("mongodb+srv://chaitanya:chaitanya@cluster0.ojoav.mongodb.net/todo-fullstack?appName=Cluster0"
+        await mongoose.connect(
+            process.env.MONGO_URL,
         );
         console.log("Connected to MongoDB");
     } catch (error) {
@@ -89,7 +91,7 @@ app.delete("/delete-task/:id", async (req, res) => {
 })
 
 
-app.listen(3000,
+app.listen(port,
     () => {
-        console.log(`Server is running on port 3000`);
+        console.log(`Server is running on port ${port}`);
     });
