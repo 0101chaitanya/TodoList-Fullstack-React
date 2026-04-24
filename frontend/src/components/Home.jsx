@@ -53,7 +53,7 @@ const Home = () => {
         }
 
 
-        fetchTodos();
+        fetchTodos().catch(console.error);
         return () => {
 
         };
@@ -76,33 +76,29 @@ const Home = () => {
     }
 
     return (<div
-        className=" min-h-screen flex max-w-4/5 gap-2 mx-auto flex-col items-center justify-center p-4">
+        className=" min-h-screen flex max-w-full sm:max-w-4/5 gap-2 mx-auto flex-col items-center justify-center p-4">
 
         <main
-            className="border-2 border-fuchsia-500 rounded-2xl p-4 flex flex-col gap-2 min-w-md max-w-4/5">
+            className="border-2 border-fuchsia-500 rounded-2xl p-4 flex flex-col gap-2 w-full md:min-w-1/5 md:max-w-4/5 md:w-auto">
 
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center gap-2 flex-wrap">
                 <h1 className="self-start text-amber-500 text-2xl">Todo
                                                                    Application</h1>
                 <ThemeSwitcher/>
 
             </div>
-            <section className="flex gap-3">
+            <section className="flex flex-col sm:flex-row gap-3 mt-2">
 
 
                     <textarea
                         value={input}
                         onChange={(e => setInput(e.target.value))}
-                        className="textarea h-24 flex-1 textarea-info rounded-md placeholder:text-info textarea-xs sm:textarea-sm md:textarea-md lg:textarea-lg xl:textarea-xl text-purple-500"
+                        className="textarea min-h-24 sm:h-24 flex-1 textarea-info rounded-md placeholder:text-info textarea-xs sm:textarea-sm md:textarea-md lg:textarea-lg xl:textarea-xl text-purple-500"
                         placeholder="Enter a todo to save ❤️"></textarea>
 
 
-                {/*<input type="text" onChange={(e => setInput(e.target.value))}*/}
-                {/*       value={input}*/}
-                {/*       className="input flex-1 input-primary rounded-md placeholder:text-primary input-xs sm:input-sm md:input-md lg:input-lg xl:input-xl"*/}
-                {/*       placeholder="Enter a todo to save ❤️"/>*/}
                 <button
-                    className="btn btn-secondary btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl"
+                    className="btn btn-secondary btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl w-full sm:w-auto"
                     onClick={saveTodo}>Save
                 </button>
             </section>
@@ -117,16 +113,17 @@ const Home = () => {
                 </EditModal>
 
             }
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col gap-3 w-full mt-4">
                 {
                     todos.map(({_id, title, status, date}) => (
-                        <li className="flex flex-col outline-1 outline-primary p-4 gap-2 rounded-md"
+                        <li className="card flex flex-col outline-1 outline-primary p-4 gap-4 rounded-md w-full"
                             key={_id}>
-                            <p className="text-lime-500">{title}</p>
-                            <section className="flex gap-2 justify-between">
+                            <p className="text-lime-500 text-sm sm:text-md md:text-lg lg:text-xl xl:text-2xl wrap-break-word">{title}</p>
+                            <section
+                                className="flex flex-col sm:flex-row gap-4 sm:gap-2 justify-between sm:items-center">
 
                                 <div
-                                    className="me-2 justify-self-start items-center justify-between flex gap-2">
+                                    className="me-2 justify-self-start items-center flex flex-wrap gap-2">
                                     <div>
                                         {
                                             status ?
@@ -210,11 +207,12 @@ const Home = () => {
 
 
                                 </div>
-                                <div className="flex gap-2">
+                                <div
+                                    className="flex gap-2 flex-wrap sm:flex-nowrap w-full sm:w-auto">
 
 
                                     <button
-                                        className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl btn-secondary"
+                                        className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl btn-secondary flex-1 sm:flex-none"
                                         onClick={() => handleOpenModal({
                                             _id,
                                             title,
@@ -225,7 +223,7 @@ const Home = () => {
 
                                     <button
                                         onClick={() => handleDeleteTask(_id)}
-                                        className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl btn-error">Delete
+                                        className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl btn-error flex-1 sm:flex-none">Delete
                                     </button>
                                 </div>
 
